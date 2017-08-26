@@ -48,6 +48,16 @@ public class AppBasics {
 		return scanner.nextLine();
 	}
 
+	public static void greetUserAndIntroTest(String appName, String testName) {
+		// Greet the user using a system out call
+		System.out.println("Welcome to the " + appName + " Application.");
+		// Ask the user for their name and store in a local scope String
+		// variable
+		System.out.println("\\-------------------------------------------------------------------\\");
+		System.out.println("You are running the following tests for " + testName);
+		System.out.println("\\-------------------------------------------------------------------\\\n");
+	}
+
 	public static boolean requestBoolean(String question) {
 		String input;
 		boolean isValid = false;
@@ -164,6 +174,31 @@ public class AppBasics {
 			} catch (RequestIntUnderMinException e) {
 				System.out.println("You have not reached the min value of " + min + " [" + input
 						+ "]. Please provide a number within range.");
+			}
+		}
+		return num;
+	}
+
+	public static int requestInt(String question, int min, int max, String errorMessage) {
+		int num = 0;
+		String input;
+		boolean isValid = false;
+		while (!isValid) {
+			System.out.print(question + " ");
+			input = scanner.nextLine();
+			try {
+				num = Integer.parseInt(input);
+				if (num > max) {
+					throw new RequestIntOverMaxException();
+				}
+				if (num < min) {
+					throw new RequestIntUnderMinException();
+				}
+				isValid = true;
+			} catch (NumberFormatException e) {
+				System.out.println("You did not supply a valid number [" + input + "]. please provide only digits.");
+			} catch (RequestIntUnderMinException | RequestIntOverMaxException e) {
+				System.out.println(errorMessage);
 			}
 		}
 		return num;
