@@ -1,6 +1,9 @@
 package com.sqa.jf.core;
 
+import org.apache.log4j.*;
 import org.openqa.selenium.*;
+
+import com.sqa.jf.helpers.*;
 
 public class Core {
 
@@ -9,6 +12,8 @@ public class Core {
 	protected WebDriver driver;
 
 	private BasicTest curTest;
+
+	private Logger log = Logger.getLogger(this.getClass());
 
 	public Core(BasicTest test) {
 		this.curTest = test;
@@ -34,7 +39,15 @@ public class Core {
 		return this.driver;
 	}
 
-	public boolean isElementPresent(By locator) {
+	public Logger getLog() {
+		return this.log;
+	}
+
+	public String getProp(String propName) {
+		return AutoBasics.getProp(propName, "src/main/resources/", "config.properties", getLog());
+	}
+
+	public boolean isPresent(By locator) {
 		return false;
 	}
 
